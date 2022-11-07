@@ -2,6 +2,7 @@ package com.mehisen.product.controller;
 
 import com.mehisen.product.dto.Product;
 import com.mehisen.product.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/v1")
 public class ProductController {
 
-
-    private static Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Autowired
     private ProductService productService;
 
@@ -28,7 +28,7 @@ public class ProductController {
     ResponseEntity<Product> addProduct(@RequestBody Product product) {
 
         String status = productService.addProduct(product);
-        logger.info("Product added statsu - {}",status);
+        log.info("Product added statsu - {}",status);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 

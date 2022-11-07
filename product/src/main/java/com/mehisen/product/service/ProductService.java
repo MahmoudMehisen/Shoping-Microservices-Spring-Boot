@@ -2,12 +2,12 @@ package com.mehisen.product.service;
 
 import com.mehisen.product.ProductRepository;
 import com.mehisen.product.dto.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ProductService {
 
@@ -18,6 +18,7 @@ public class ProductService {
     }
 
     public String addProduct(Product product) {
+
         productRepository.save(product);
         return "success";
     }
