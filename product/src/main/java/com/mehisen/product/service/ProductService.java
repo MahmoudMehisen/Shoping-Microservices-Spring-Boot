@@ -1,5 +1,6 @@
 package com.mehisen.product.service;
 
+import com.mehisen.product.ProductRepository;
 import com.mehisen.product.dto.Product;
 import org.springframework.stereotype.Service;
 
@@ -10,52 +11,42 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    List<Product> products = new ArrayList<>();
+    private ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public String addProduct(Product product) {
-        products.add(product);
-
+        productRepository.save(product);
         return "success";
     }
 
     public List<Product> listAllProducts() {
-        return products;
+        return productRepository.findAll();
     }
 
 
     public List<Product> productCategoryList(String category) {
-        return products.stream().filter(product -> product.getCategory().getName().equalsIgnoreCase(category)).collect(Collectors.toList());
+        return productRepository.findByCategory(category);
     }
 
     public Product productById(Integer id) {
-        return products.stream().filter(product -> product.getId() == id).findAny().get();
+        return productRepository.findById(id).get();
     }
 
     public String updateProduct(Product product) {
-        for (Product prod : products) {
-            if (prod.getId() == product.getId()) {
-                prod.setName(product.getName());
-                prod.setCategory(product.getCategory());
-                prod.setDiscount(product.getDiscount());
-                prod.setPrice(product.getPrice());
-                prod.setDiscountDescription(product.getDiscountDescription());
 
-                return "Product updated Successfully";
-            }
-        }
+        productRepository.save(product);
 
-        return "Product update failed";
+        return "Product updated Successfully";
+
     }
 
     public String deleteProductById(Integer id) {
-        for (Product prod : products) {
-            if (prod.getId() == id) {
+        productRepository.deleteById(id);
+        return "Product deleted";
 
-                products.remove(prod);
-                return "Product deleted";
-            }
-        }
 
-        return "Product deleted failed";
     }
 }
