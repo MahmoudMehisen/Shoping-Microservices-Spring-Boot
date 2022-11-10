@@ -2,6 +2,7 @@ package com.mehisen.product.service;
 
 import com.mehisen.product.ProductRepository;
 import com.mehisen.product.dto.Product;
+import com.mehisen.product.exception.OfferNotValidException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class ProductService {
 
     public String addProduct(Product product) {
 
+        if(product.getPrice() == 0 && product.getDiscount() > 0){
+            throw new OfferNotValidException("No discount is allowed at 0 product price");
+        }
         productRepository.save(product);
         return "success";
     }
