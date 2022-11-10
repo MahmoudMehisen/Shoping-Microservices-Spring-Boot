@@ -19,12 +19,12 @@ import java.util.List;
 public class Product {
 
     @Id
-    private Integer id;
+    private String id;
 
     @NotNull(message = "Product Name should not be null")
     private String name;
 
-    @NotNull(message = "Category should not be null")
+    @NotNull(message = "Category of the product should not be null")
     private Category category;
 
     @Min(0)
