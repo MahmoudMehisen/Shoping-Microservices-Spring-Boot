@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+
+spring:
+  mail:
+    host: smtp.mailtrap.io
+    port: 465
+    username: 6cfb505a2240e2
+    password: 0b8566f7b06a2a
+    test-connection: true
+  boot:
+    admin:
+      notify:
+        mail:
+          to: bevide4439@lance7.com
+          ignore-changes:
+            - ''
+
