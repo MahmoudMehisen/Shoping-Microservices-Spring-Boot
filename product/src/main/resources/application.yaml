@@ -12,6 +12,12 @@ spring:
   profiles:
     active: local
 
+  boot:
+    admin:
+      client:
+        url:
+          - http://localhost:8081
+
 
 logging:
   file:

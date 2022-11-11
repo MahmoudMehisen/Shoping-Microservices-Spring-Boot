@@ -30,7 +30,7 @@ public class ProductController {
 
         String status = productService.addProduct(product);
 
-        log.info("Product added statsu - {}", status);
+        log.info("Product added status - {}", status);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
