@@ -9,6 +9,17 @@ spring:
       host: localhost
       port: 27017
       database: shopping
+  profiles:
+    active: local
+
+
+logging:
+  file:
+    name: d:spring\logs\product.log
+
+  logback:
+    rollingpolicy:
+      max-file-size: 50KB
 
 
 product:

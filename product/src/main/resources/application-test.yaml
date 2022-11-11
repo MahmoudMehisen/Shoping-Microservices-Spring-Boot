@@ -1,0 +1,12 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: Product Microservice in Dev Environment
+
+
+product:
+  currencies:
+    - EGP
+    - USD

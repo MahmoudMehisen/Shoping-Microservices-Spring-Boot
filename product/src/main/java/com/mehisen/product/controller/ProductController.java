@@ -29,31 +29,40 @@ public class ProductController {
     ResponseEntity<Product> addProduct(@RequestBody @Valid Product product) {
 
         String status = productService.addProduct(product);
-        log.info("Product added statsu - {}",status);
+
+        log.info("Product added statsu - {}", status);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @GetMapping("/productList")
-    List<Product> productList(){
-        return productService.listAllProducts();
+    List<Product> productList() {
+        //log.info("Listing product");
+
+        List<Product> products = productService.listAllProducts();
+
+        //log.info("All the product returned - {}", products);
+
+        return products;
     }
 
     @GetMapping("/productList/{category}")
-    List<Product> productCategoryList(@PathVariable String category){
+    List<Product> productCategoryList(@PathVariable String category) {
         return productService.productCategoryList(category);
     }
 
     @GetMapping("/product/{id}")
-    Product productById(@PathVariable String id){
+    Product productById(@PathVariable String id) {
         return productService.productById(id);
     }
+
     @PutMapping("/productUpdate")
-    String updateProduct(@RequestBody Product product){
+    String updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    String deleteProductById(@PathVariable String id){
+    String deleteProductById(@PathVariable String id) {
         return productService.deleteProductById(id);
     }
 }

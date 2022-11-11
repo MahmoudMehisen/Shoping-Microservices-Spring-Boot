@@ -20,7 +20,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     private ProductConfiguration productConfiguration;
-    
+
     public String addProduct(Product product) {
 
 
