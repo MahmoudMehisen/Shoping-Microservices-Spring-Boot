@@ -11,6 +11,16 @@ spring:
     test-connection: true
   boot:
     admin:
+      ui:
+        login-icon: 'assets/img/logo.png'
+        available-languages:
+          - en
+          - fr
+        view-settings:
+          - name: 'about'
+            enabled: false
+        brand: "<img src='assets/img/logo.png'><span> Mehisen Services</span>"
+        title: "Mehisen Services for Online Shopping"
       notify:
         mail:
           to: bevide4439@lance7.com
