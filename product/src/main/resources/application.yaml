@@ -19,7 +19,28 @@ logging:
 
   logback:
     rollingpolicy:
-      max-file-size: 50KB
+      max-file-size: 10MB
+  level:
+    root: INFO
+
+
+# actuator specific
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+  info:
+    build:
+      enabled: true
+
+
 
 
 product:
@@ -27,3 +48,4 @@ product:
       - EGP
       - USD
       - EUR
+
