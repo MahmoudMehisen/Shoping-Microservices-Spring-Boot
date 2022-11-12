@@ -1,6 +1,8 @@
 package com.mehisen.product.service;
 
+import com.mehisen.product.dto.ProductResponse;
 import com.mehisen.product.exception.CurrencyNotValidException;
+import com.mehisen.product.exception.ProductNotFoundException;
 import com.mehisen.product.repsoitory.ProductRepository;
 import com.mehisen.product.dto.Product;
 import com.mehisen.product.exception.OfferNotValidException;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
@@ -21,7 +24,7 @@ public class ProductService {
 
     private ProductConfiguration productConfiguration;
 
-    public String addProduct(Product product) {
+    public ProductResponse addProduct(Product product) {
 
 
         log.info("adding product");
@@ -34,34 +37,54 @@ public class ProductService {
         }
 
         productRepository.save(product);
-        return "success";
+        Product savedProduct = productRepository.save(product);
+
+        return new ProductResponse("success",savedProduct.getName() + "added into the system");
     }
 
     public List<Product> listAllProducts() {
-        return productRepository.findAll();
+        List<Product> products = productRepository.findAll();
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("No product found for the given query");
+        }
+        return products;
     }
 
 
     public List<Product> productCategoryList(String category) {
-        return productRepository.findByCategory(category);
+        List<Product> productsByCategory = productRepository.findByCategory(category);
+        if (productsByCategory.isEmpty()) {
+            throw new ProductNotFoundException("No product found for the category-" + category);
+        }
+        return productsByCategory;
     }
 
     public Product productById(String id) {
-        return productRepository.findById(id).get();
+        return productRepository
+                .findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found for id - " + id));
     }
 
-    public String updateProduct(Product product) {
+    public ProductResponse updateProduct(Product product) {
 
-        productRepository.save(product);
+        Optional<Product> prod = productRepository.findById(product.getId());
+        if (!prod.isPresent()) {
+            return new ProductResponse("FAILED", "Product to be updated not found in the system");
+        }
 
-        return "Product updated Successfully";
+        Product updatedProduct = productRepository.save(product);
 
+        return new ProductResponse("SUCCESS", "Product Updated - " + updatedProduct.getName());
     }
 
-    public String deleteProductById(String id) {
+    public ProductResponse deleteProductById(String id) {
+        Optional<Product> prod = productRepository.findById(id);
+        if (!prod.isPresent()) {
+            return new ProductResponse("FAILED", "Product to be deleted not found in the system");
+        }
+
         productRepository.deleteById(id);
-        return "Product deleted";
 
-
+        return new ProductResponse("SUCCESS", "Product Deleted");
     }
 }

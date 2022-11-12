@@ -1,6 +1,7 @@
 package com.mehisen.product.controller;
 
 import com.mehisen.product.dto.Product;
+import com.mehisen.product.dto.ProductResponse;
 import com.mehisen.product.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,13 +32,11 @@ public class ProductController {
 
     @PostMapping("/addProduct")
     @ApiOperation("Used to add the product into system")
-    ResponseEntity<Product> addProduct(@ApiParam("Information about products to be added") @RequestBody @Valid Product product) {
+    ResponseEntity<ProductResponse> addProduct(@ApiParam("Information about products to be added") @RequestBody @Valid Product product) {
 
-        String status = productService.addProduct(product);
+        ProductResponse productResponse = productService.addProduct(product);
 
-        log.info("Product added status - {}", status);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
 
     @GetMapping("/productList")
@@ -60,12 +59,12 @@ public class ProductController {
     }
 
     @PutMapping("/productUpdate")
-    String updateProduct(@RequestBody Product product) {
+    ProductResponse updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    String deleteProductById(@PathVariable String id) {
+    ProductResponse deleteProductById(@PathVariable String id) {
         return productService.deleteProductById(id);
     }
 }

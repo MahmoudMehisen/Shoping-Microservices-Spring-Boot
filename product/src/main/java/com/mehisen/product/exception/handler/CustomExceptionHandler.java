@@ -3,6 +3,7 @@ package com.mehisen.product.exception.handler;
 import com.mehisen.product.dto.APIError;
 import com.mehisen.product.exception.CurrencyNotValidException;
 import com.mehisen.product.exception.OfferNotValidException;
+import com.mehisen.product.exception.ProductNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler({OfferNotValidException.class, CurrencyNotValidException.class})
+    @ExceptionHandler({OfferNotValidException.class, CurrencyNotValidException.class ,  ProductNotFoundException.class})
     ResponseEntity<?> offerNotValidHandler(Exception exc, ServletWebRequest request){
         APIError apiError = new APIError();
         apiError.setTimestamp(LocalDateTime.now());
