@@ -2,6 +2,9 @@ package com.mehisen.product.controller;
 
 import com.mehisen.product.dto.Product;
 import com.mehisen.product.service.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/v1")
+@Api(description = "Product API having endpoints which are used to interact with product microservice")
 public class ProductController {
 
     @Autowired
@@ -26,7 +30,8 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    ResponseEntity<Product> addProduct(@RequestBody @Valid Product product) {
+    @ApiOperation("Used to add the product into system")
+    ResponseEntity<Product> addProduct(@ApiParam("Information about products to be added") @RequestBody @Valid Product product) {
 
         String status = productService.addProduct(product);
 
@@ -36,18 +41,16 @@ public class ProductController {
     }
 
     @GetMapping("/productList")
+    @ApiOperation("List all the products into the system")
     List<Product> productList() {
-        //log.info("Listing product");
 
         List<Product> products = productService.listAllProducts();
-
-        //log.info("All the product returned - {}", products);
 
         return products;
     }
 
     @GetMapping("/productList/{category}")
-    List<Product> productCategoryList(@PathVariable String category) {
+    List<Product> productCategoryList(@ApiParam("category of the products to be listed") @PathVariable String category) {
         return productService.productCategoryList(category);
     }
 
